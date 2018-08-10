@@ -20,7 +20,7 @@ def get_routes(lat, long):
         # catching a few airports that format incorrectly
         except ValueError:
             continue;
-        # haversine formula, 75 used as max distance from origin to airports
+        # using haversine formula, find nearby airports with 75 miles used as max distance
         if 7912 * asin((sin((lat2 - lat1)/2)**2 + cos(lat1) * cos(lat2) * sin((long2 - long1)/2)**2)**0.5) < 75:
             source_airports.append(line.split(',')[4][1:-1])
     if "" in source_airports:
@@ -34,7 +34,6 @@ def get_routes(lat, long):
     for line in airports:
         if line.split(',')[4][1:-1] in list_airports:
             list_cities.append((float(line.split(',')[6]), float(line.split(',')[7])))
-    list_cities.sort()
     return(list_cities)
 
 if __name__ == '__main__':
