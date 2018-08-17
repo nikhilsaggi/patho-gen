@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>patho-gen</title>
+    <h1>Global Pandemic Simulator</h1>
+  </head>
+  <body>
+    Your starting coordinates were ({{lat}}, {{long}}).<br>
+    Affected locations: {{result}}<br>
+    <form action="/map/" method="post">
+      <input type="hidden" name="affectedCities" value="{{result}}"></input>
+      <input type="hidden" name="savedLocs" value="{{explored}}"></input>
+      <input type="hidden" name="lat" value={{lat}}></input>
+      <input type="hidden" name="long" value={{long}}></input>
+      <input type="hidden" name="rate" value={{rate}}></input>
+      <output id="rateText" value=""></output><br>
+      <input type="submit" value="Continue">
+    </form>
+  </body>
+</html>

@@ -4,8 +4,9 @@
     <h1>Global Pandemic Simulator</h1>
   </head>
   <body>
-    <script src="main.js"></script>
     <form action="/map/" method="post">
+      <input type="hidden" name="savedLocs" value="{}"></input>
+      <input type="hidden" name="affectedCities" value="[]"></input>
       Source latitude:<br>
       <input type="text" name="lat"></input><br>
       Source longitude:<br>
