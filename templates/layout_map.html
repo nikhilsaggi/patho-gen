@@ -4,8 +4,17 @@
     <h1>Global Pandemic Simulator</h1>
   </head>
   <body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="http://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
+
     Your starting coordinates were ({{lat}}, {{long}}).<br>
-    Affected locations: {{result}}<br>
+    Your disease has affected <b id="pop"></b> people, or <b id="percent"></b>% of the global population.<br>
+    <script>
+      document.getElementById("percent").innerHTML = {{population}}/7600000000
+      document.getElementById("pop").innerHTML = ({{population}}).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    </script>
+
     <form action="/map/" method="post">
       <input type="hidden" name="affectedCities" value="{{result}}"></input>
       <input type="hidden" name="savedLocs" value="{{explored}}"></input>
@@ -15,5 +24,48 @@
       <output id="rateText" value=""></output><br>
       <input type="submit" value="Continue">
     </form>
+
+    <div id="container1" style="position: relative; width: 80%; max-height: 450px;"></div>
+
+    <script>
+      // create map object
+      var map = new Datamap({
+        scope: 'world',
+        element: document.getElementById('container1'),
+        projection: 'mercator',
+        height: 800,
+        fills: {
+          defaultFill: '#000000',
+          cityFill: 'red'
+        },
+      })
+      // add arcs to map to represent affected routes
+      var routes = {{cities_air|tojson|safe}}
+      var arcList = []
+      for (x=0; x<routes.length; x++) {
+        arcList.push({
+            origin: {
+              latitude: routes[x][2][0],
+              longitude: routes[x][2][1]
+            },
+            destination: {
+              latitude: routes[x][0],
+              longitude: routes[x][1]
+            }
+          });
+      }
+      map.arc(arcList, {strokeWidth: 2});
+      // add bubbles to the map to represent affected cities
+      var cities = {{cities_road|tojson|safe}}
+      var bubbleList = []
+      for (x=0; x<cities.length; x++) {
+          bubbleList.push({name: cities[x][3] + "\nPopulation: " + cities[x][2].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), latitude: cities[x][0], longitude: cities[x][1], radius: cities[x][2]/100000, fillKey: 'cityFill'});
+      }
+      map.bubbles(bubbleList, {
+      popupTemplate: function(geo, data) {
+         return "<div class='hoverinfo'>" + data.name + "</div>";
+      }
+      });
+    </script>
   </body>
 </html>

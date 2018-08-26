@@ -33,7 +33,7 @@ def get_routes(lat, long):
     list_cities = []
     for line in airports:
         if line.split(',')[4][1:-1] in list_airports:
-            list_cities.append((float(line.split(',')[6]), float(line.split(',')[7])))
+            list_cities.append((float(line.split(',')[6]), float(line.split(',')[7]), [lat, long]))
     return(list_cities)
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ def search_cities(lat, long, numelts):
     # record latitude, longitude and population for each city reached
     try:
         for city in data['geonames']:
-            list_cities.append((city['lat'], city['lng'], city['population']))
+            list_cities.append((city['lat'], city['lng'], city['population'], city['name']))
     # if api times out, the request is retried with a fewer number of cities
     except KeyError:
         return(search_cities(lat, long, int(numelts*0.8)))
