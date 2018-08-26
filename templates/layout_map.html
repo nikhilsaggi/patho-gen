@@ -59,7 +59,7 @@
       var cities = {{cities_road|tojson|safe}}
       var bubbleList = []
       for (x=0; x<cities.length; x++) {
-          bubbleList.push({name: cities[x][3] + "\nPopulation: " + cities[x][2].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), latitude: cities[x][0], longitude: cities[x][1], radius: cities[x][2]/100000, fillKey: 'cityFill'});
+          bubbleList.push({name: cities[x][3] + ": " + cities[x][2].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), latitude: cities[x][0], longitude: cities[x][1], radius: cities[x][2]/100000, fillKey: 'cityFill'});
       }
       map.bubbles(bubbleList, {
       popupTemplate: function(geo, data) {
