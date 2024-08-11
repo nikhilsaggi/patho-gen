@@ -1,0 +1,21 @@
+[project]
+name = "patho-gen"
+version = "1.0.0"
+description = "An application to visualize the spread of diseases via transportation networks"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.0.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.5.7",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/foo"]
